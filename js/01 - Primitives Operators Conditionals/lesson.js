@@ -117,6 +117,11 @@ The following two characters end this multi-line comment: */
   );
   
   /**
+   * Variable identifiers may contain letters, digits, underscores, and dollar
+   * signs, but may not begin with a digit. They are also case sensitive, so
+   * `DOG` is a different identifier than `Dog`. Identifiers must also not be
+   * among the JavaScript reserved words list.
+   *
    * Reserved words can't be used as variable names. This way JavaScript doesn't
    * confuse variable names for these words of special use. If you could name a
    * variable `var`, then whenever you used the word `var`, JavaScript wouldn't
