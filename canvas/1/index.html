@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+<head>
+
+  <title>Canvas Tutorial 1</title>
+
+  <style>
+
+    html, body {
+      margin: 0;
+      height: 100%;
+      overflow: hidden;
+    }
+
+  </style>
+
+  <script>(function () { 'use strict';
+
+    window.addEventListener('load', onLoad);
+    function onLoad() {
+
+      // Canvas we'll draw on
+      var canvas = document.getElementById('canvas');
+      // Two dimensional drawing context
+      var ctx = canvas.getContext('2d');
+
+      // Animation state
+      var state = {
+        tick: 0,
+        colorful: false
+      };
+
+      // Increment tick periodically
+      setInterval(function () {
+        ++state.tick;
+      }, 100);
+
+      window.addEventListener('keypress', function(e) {
+        var keyCode = typeof e.which === "number" ? e.which : e.keyCode;
+        onKeyPress(keyCode, state);
+      });
+
+      (function animationCallback() {
+        // call again next time we can draw
+        window.requestAnimationFrame(animationCallback);
+        // Draw the thing
+        animate(canvas, ctx, state);
+      })();
+    }
+
+    function onKeyPress(keyCode, state) {
+        switch (keyCode) {
+          case 32: // Spacebar
+            state.colorful = !state.colorful;
+            break;
+          default:
+            console.log(keyCode);
+        }
+    }
+
+    // Here is where your magic happens
+    function animate(canvas, ctx, state) {
+
+      var grayscale = [
+        '#000',
+        '#444',
+        '#888',
+        '#ccc',
+        '#fff',
+        '#ccc',
+        '#888',
+        '#444'
+      ];
+      var colorful = [
+        '#0000ff',
+        '#008fff',
+        '#00ff00',
+        '#ffff00',
+        '#ff7f00',
+        '#ff0000',
+        '#9400d3'
+      ];
+      var colors = state.colorful ? colorful : grayscale;
+      var maxRects = 10;
+      var nRects = maxRects || colors.length;
+      var divisor = nRects * 2;
+      var fractionWidth = canvas.width / divisor;
+      var fractionHeight = canvas.height / divisor;
+
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      // Clear canvas
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (var i = 0; i < nRects; ++i) {
+        var paddingWidth = fractionWidth * i;
+        var paddingHeight = fractionHeight * i;
+        ctx.fillStyle = colors[(i + state.tick) % colors.length];
+        ctx.fillRect(
+          paddingWidth,
+          paddingHeight,
+          canvas.width - paddingWidth * 2,
+          canvas.height - paddingHeight * 2
+        );
+      }
+
+    }
+
+  })()</script>
+
+</head>
+<body>
+
+  <canvas id="canvas"></canvas>
+
+</body>
+</html>
