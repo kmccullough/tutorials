@@ -2,7 +2,7 @@
 
 First thing is first: sometimes you want to add explanatory text to describe
 your code; you do so using a comment. In JavaScript, you can start a comment
-with the two characters /* and end it with the same two character's reversed.
+with the two characters /* and end it with the same two characters reversed.
 The following two characters end this multi-line comment: */
 
 
@@ -10,7 +10,7 @@ The following two characters end this multi-line comment: */
  * Here we started another multi-line comment.
  * 
  * It's OK to put /* inside a comment, but we were forced to end the comment
- * when putting the * and / characters together to show how to end the comment.
+ * when putting the * and / characters together to show how to end the comment. (?)
  *
  * Sometimes you'll see multi-line comments like this one, where stars run down
  * the left side. It just looks nice, but it's still just whatever is between
@@ -18,13 +18,13 @@ The following two characters end this multi-line comment: */
  * The next line is missing a star:
             ...    but the comment goes on    ...
  *
- * The beginning or end of the comment need not be on it's own line either, it's
+ * The beginning or end of the comment need not be on its own line either, it's
  * just easier to see where the comment ends that way.
  */
 
 // Comments can also be single-line.
 // Everything after // on a line is ignored.
-       // Everything before the // is NOT ignored. But space is ignored.
+       // Everything before the // is NOT ignored. But space is ignored. (?)
        
 
 // You can ignore this and the last line in this file, for now.
