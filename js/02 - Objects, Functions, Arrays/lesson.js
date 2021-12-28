@@ -17,11 +17,12 @@
    * only represent a single simple piece of data, but these primitives still
    * come with associated built-in functionality in the way of functions as
    * members on these value "objects". We access members of an object by
-   * specifying the object, then a dot (.), then the name of the member. We then
-   * call the function by passing in any required arguments within parentheses.
+   * specifying the object, then a dot (`.`), then the name of the member.
+   * We then call the function by passing in any required arguments within
+   * parentheses.
    *
    * Remember, Javascript doesn't mind extra space, so the space between each of
-   * the pairs of closing parentheses below ") )" is only there for readability,
+   * the pairs of closing parentheses below `) )` is only there for readability,
    * and is not required.
    */
   console.log( 'Lower Dog:', 'DOG'.toLowerCase() );
@@ -50,7 +51,7 @@
    * The following array has three items (1, 2, and 3) and a length property of
    * 3 to match:
    */
-  var myFirstNumbers = [ 1, 2, 3 ];
+  const myFirstNumbers = [ 1, 2, 3 ];
 
   /**
    * In JavaScript, arrays start at zero. Expanded in the console you can see
@@ -60,7 +61,7 @@
 
   /**
    * This zero-based indexing might be confusing at first, but is pretty
-   * prolific in programming and has it's advantages over one-based indexes.
+   * prolific in programming and has its advantages over one-based indexes.
    * Think of the index as the offset from the start of the list; zero is the
    * first element, because it is zero distance away from the start of the list.
    * These advantages will become more apparent in a future lesson on looping.
@@ -77,15 +78,14 @@
 
   /**
    * If you are wondering what I meant by not knowing what the identifier is,
-   * consider the following. Math.random returns a random decimal number between
-   * 0 and 1, inclusive of 0 but not 1. Multiplying it by the length  * of the
-   * array gives us instead a random number between 0 and 3, excluding 3.
-   * Math.floor drops off any decimal part, assuring `randomNumberIndex` will
-   * randomly contain the number 0, 1, or 2. Now, every time you reload the page
-   * a random number will be generated and a random one of "my first numbers"
-   * will be logged to the console.
+   * consider the following. `Math.random()` returns a random decimal number
+   * between 0 and 1, inclusive of 0 but not 1. Multiplying it by the length of
+   * the array gives us instead a random number between 0 and 3, excluding 3.
+   * `Math.floor()` drops off any decimal part, assuring `randomNumberIndex`
+   * will randomly contain the number 0, 1, or 2. Now, every time you reload, a
+   * random index will be generated to log a random number from the array.
    */
-  var randomNumberIndex = Math.floor(
+  const randomNumberIndex = Math.floor(
     Math.random() * myFirstNumbers.length
   );
   console.log(
@@ -94,14 +94,17 @@
   );
 
   /**
-   * We can add items to an array using methods available to all arrays:
+   * We can add items to an array using methods available to all arrays.
+   * Note here that although the variable is declared `const`, mutating the
+   * array contents "in-place" does not actually reassign the variable
+   * (it remains the same array reference), and therefore does not error.
    */
-  var myArray = [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ];
+  const myArray = [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ];
   // "Pops" OUT and returns LAST item in array
-  myArray.pop();
+  const myNinePoppedOut = myArray.pop();
   // Takes OUT and returns FIRST item in array, "shifting" all item numeric
   // indexes down by one. So, item indexed 1 becomes index 0, etc.
-  myArray.shift();
+  const myZeroShiftedOff = myArray.shift();
   // "Pushes" IN item as new LAST item of the array
   myArray.push('A');
   // Adds IN item as new FIRST item of the array, "unshifting" all item numeric
@@ -109,12 +112,12 @@
   // unshifted item is indexed 0.
   myArray.unshift('B');
   // You can even splice a chunk out of the middle:
-  var splicedOutItems = myArray.splice(
+  const splicedOutItemsArray = myArray.splice(
     4, // Start at index 4 (fifth item)
     3  // Remove three items
   );
   console.log('What did you do to my array?', myArray);
-  console.log('Spliced items: ', splicedOutItems);
+  console.log('Spliced items: ', splicedOutItemsArray);
 
   /**
    * It should be noted that the developer console might not actually evaluate
@@ -132,7 +135,7 @@
    * order with a known length of the list.
    *
    * Objects are powerful as well with such a small definition: a list of items
-   * in no particular order with specific indexable string keys.
+   * in [usually] no particular order with specific indexable string keys.
    *
    * Arrays can contain other arrays or objects, and objects can contain other
    * objects or arrays; remember an array is a type of object.
@@ -166,11 +169,14 @@
    * or file, so any function declared through a function statement can be
    * called even before the line where it is declared. The same hoisting
    * mechanism works with variable declarations, but since it doesn't hoist the
-   * variable definition it's not as helpful as function hoisting.
+   * variable definition, care must be taken not to use the value before it is
+   * defined as expected.
    *
    * Now that we've declared the function, no code has actually run, and won't
    * until we call the function. We make functions to easily run the same code
    * over and over, so let's call it three times. You should see three outputs.
+   * Note, the developer console may group these duplicated logs, something like:
+   *   (3) "Hello Function!"
    */
   myFirstFunction();
   myFirstFunction();
@@ -213,13 +219,13 @@
    *
    * When we store a function created with a function expression in a variable,
    * it becomes clearer that functions are simply another type of object and are
-   * themselves values that can be passed around. Note however that, while the
-   * `subtractNumbers` variable declaration is hoisted, it initially has the
-   * value undefined until this line of code is reached; function expressions
-   * are not hoisted. Which just means, don't try to call the function before
-   * it is actually defined.
+   * themselves values that can be passed around (AKA "first-class-citizens").
+   * Note however that, while the `subtractNumbers` variable declaration is
+   * hoisted, it initially has the value undefined until this line of code is
+   * reached; function expressions are not hoisted. Which just means, don't try
+   * to call the function before it is actually defined.
    */
-  var subtractNumbers = function (a, b) {
+  const subtractNumbers = function (a, b) {
     return +a - +b;
   };
   console.log('My First Function Expression', subtractNumbers(12, 34)); // -22
@@ -235,8 +241,8 @@
    * `op` is the string `subtract`, and will return null if the `op` is not
    * recognized.
    */
-  var operateOnNumbers = function (op, a, b) {
-    var operation;
+  const operateOnNumbers = function (op, a, b) {
+    let operation;
     switch (op) {
       case 'add':
         // Assign reference to `addNumbers` function to the `operation` variable
@@ -262,7 +268,7 @@
   };
   // We put the op here into a variable to illustrate that we don't need to know
   // which operation we are passing in, we just store it somewhere in a variable.
-  var op = 'add';
+  let op = 'add';
   console.log('Abstracting Addition', operateOnNumbers(op, 12, 34)); // 46
   op = 'subtract';
   console.log('Abstracting Subtraction', operateOnNumbers(op, 12, 34)); // -22
@@ -307,11 +313,11 @@
    * what you've learned.
    */
   // The inner function code shouldn't change our outer variable.
-  var aVariable = 'A VALUE';
+  const aVariable = 'A VALUE';
   console.log('Outer variable before:', aVariable);
   -function (numbers, letters) {
     // This is a unique variable; not the same as the one outside the function.
-    var aVariable = 'A DIFFERENT VALUE';
+    const aVariable = 'A DIFFERENT VALUE';
     console.log(
       'My IIFE', numbers, letters,
       'Inner variable:', aVariable
@@ -334,9 +340,9 @@
    *
    * The easiest way to define a custom object is using an "object literal".
    * Which is just a curly-bracket block, with key/value pairs separated by
-   * commas, and the keys separated from their values by colons (:).
+   * commas, and the keys separated from their values by colons (`:`).
    */
-  var myFirstObject = {
+  const myFirstObject = {
     // Properties
     name: 'My First Object',
     123: 'Numbers as keys are coerced to string keys',

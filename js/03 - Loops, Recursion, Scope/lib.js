@@ -49,8 +49,8 @@
     },
 
     update: function() {
-      var els = this.els;
-      var states = this.states;
+      const els = this.els;
+      const states = this.states;
       this.elKeys.forEach(function(elKey) {
         els[elKey].update(states[elKey]);
       });
@@ -58,15 +58,15 @@
 
   };
 
-  var elStates = {
+  const elStates = {
 
     stars: {
       input: function (fn) {
-        var minNChars = 10;
-        var maxNChars = 100;
-        var nChars = Math.floor(Math.random() * (maxNChars - minNChars) + minNChars);
-        var result = typeof fn !== 'function' ? undefined : fn(nChars);
-        var isString = typeof result === 'string';
+        const minNChars = 10;
+        const maxNChars = 100;
+        const nChars = Math.floor(Math.random() * (maxNChars - minNChars) + minNChars);
+        const result = typeof fn !== 'function' ? undefined : fn(nChars);
+        const isString = typeof result === 'string';
         this.objectives.state('stars', {
           called: true,
           calledWithFn: typeof fn === 'function',
@@ -97,17 +97,17 @@
 
     stripes: {
       input: function (fn) {
-        var minNChars = 10;
-        var maxNChars = 100;
-        var minWidth = 2;
-        var maxWidth = 11;
-        var nChars = Math.floor(Math.random() * (maxNChars - minNChars) + minNChars);
-        var width = Math.floor(Math.random() * (maxWidth - minWidth) + minWidth);
-        var result = typeof fn !== 'function' ? undefined : fn(nChars, width);
-        var isString = typeof result === 'string';
-        var correctResult = '';
-        var stripes = ['=', '|'];
-        for (var i = 0; i < nChars; ++i) {
+        const minNChars = 10;
+        const maxNChars = 100;
+        const minWidth = 2;
+        const maxWidth = 11;
+        const nChars = Math.floor(Math.random() * (maxNChars - minNChars) + minNChars);
+        const width = Math.floor(Math.random() * (maxWidth - minWidth) + minWidth);
+        const result = typeof fn !== 'function' ? undefined : fn(nChars, width);
+        const isString = typeof result === 'string';
+        let correctResult = '';
+        const stripes = ['=', '|'];
+        for (let i = 0; i < nChars; ++i) {
           correctResult += stripes[Math.floor(i % (width * stripes.length) / width)];
         }
         this.objectives.state('stripes', {
@@ -143,13 +143,13 @@
 
     diamonds: {
       input: function (fn) {
-        var minNChars = 2;
-        var maxNChars = 10;
-        var nChars = Math.floor(Math.random() * (maxNChars - minNChars) + minNChars);
-        var result = typeof fn !== 'function' ? undefined : fn(nChars);
-        var isString = typeof result === 'string';
-        var rresult = isString && result.split('').reverse().join('');
-        var paddingWidth = Math.floor((nChars - 1) / 2);
+        const minNChars = 2;
+        const maxNChars = 10;
+        const nChars = Math.floor(Math.random() * (maxNChars - minNChars) + minNChars);
+        const result = typeof fn !== 'function' ? undefined : fn(nChars);
+        const isString = typeof result === 'string';
+        const rresult = isString && result.split('').reverse().join('');
+        const paddingWidth = Math.floor((nChars - 1) / 2);
         this.objectives.state('diamonds', {
           called: true,
           calledWithFn: typeof fn === 'function',
@@ -238,7 +238,7 @@
 
   };
 
-  var tutorial = window.tutorial
+  const tutorial = window.tutorial
     = window.tutorial || new Tutorial();
 
 

@@ -12,8 +12,8 @@
    * limited to running the exact code we wrote exactly as many times as it
    * appears, rather than just having a way to say "do this X amount of times".
    */
-  var arrayOfNumbersV1 = function(n) {
-    var result = [];
+  const arrayOfNumbersV1 = function(n) {
+    const result = [];
     if (n >= 0 && n <= 5) {
       result.push(0);
       if (n > 0) {
@@ -60,9 +60,9 @@
    * function is called it adds another entry onto this stack, and eventually
    * you'll run into a maximum limit to the stack size.
    */
-  var infiniteRecursion = function() {
+  function infiniteRecursion() {
     infiniteRecursion();
-  };
+  }
 
   /**
    * Using the above example, let's take a moment to appreciate and understand
@@ -74,7 +74,7 @@
    * being isolated to that function is only half of the story. The other half
    * of the story is that variables defined outside a function are available for
    * use inside that function. So, since the function uses a reference to the
-   * `infiniteRecursion` variable, JavaScript adds a reference to that variable
+   * `infiniteRecursion` identifier, JavaScript adds a reference to that variable
    * to the function's scope, and that function can then read or write to that
    * variable, changing the value that variable would have in the outer scope,
    * even after the function completed execution. To this point you may be
@@ -89,9 +89,9 @@
    * Below is a broader solution to the above `arrayOfNumbersV1` limitations,
    * using what we've learned about recursion.
    */
-  var arrayOfNumbersV2 = function(n, result) {
+  function arrayOfNumbersV2(n, result) {
     // Limit recursion so that we don't overflow the stack
-    var recursionLimit = 500;
+    const recursionLimit = 500;
     // Set result to itself, or if it's not already set, set it to a new array
     result = result || [];
     // Make sure we are within our limits
@@ -111,7 +111,7 @@
       );
     }
     return result;
-  };
+  }
 
   // Here we call it with only the required first argument.
   // Note the array has a length of 51 since the first number added was 0.
@@ -121,10 +121,10 @@
    * Recursion has its uses, but there are other--often better--ways to repeat
    * a task. Typically we'd just use a loop. Doing so makes the intent clearer
    * and--aside from the memory taken up by result itself--only takes up memory
-   * for a single number variable (i) rather than n times stack entries.
+   * for a single number variable (i) rather than n-times stack entries.
    */
-  var arrayOfNumbersV3 = function(n) {
-    var result = [];
+  function arrayOfNumbersV3(n) {
+    const result = [];
     // Make sure we are within our limits
     if (n >= 0) {
       // An if condition's plural equivalent is a loop, offering a conditional
@@ -139,7 +139,7 @@
       // section is for updating your counter, and is equivalent to putting the
       // same code before the end curly-brace of the loop; in this case we use
       // the ++ unary operator to add 1 to the number stored in i.
-      for (var i = 0; i <= n; ++i) {
+      for (let i = 0; i <= n; ++i) {
         result.push(i);
       }
     } else {
@@ -149,7 +149,7 @@
       );
     }
     return result;
-  };
+  }
   // Just to verify it still works...
   console.log('Array of numbers V3 (50):', arrayOfNumbersV3(50));
 
@@ -167,20 +167,20 @@
    * that may have been used to pass in the value into our function. This is
    * contrary to how directly accessing a variable in an outside scope works.
    */
-  var arrayOfNumbersV4HasBeenRun = false;
-  var arrayOfNumbersV4 = function(n) {
+  let arrayOfNumbersV4HasBeenRun = false;
+  function arrayOfNumbersV4(n) {
     arrayOfNumbersV4HasBeenRun = true;
-    var result = [];
+    const result = [];
     // delta = -1, 0, or 1 depending on sign of n
-    var delta = n > 0 ? -1 : n < 0 ? 1 : 0;
+    let delta = n > 0 ? -1 : n < 0 ? 1 : 0;
     for (; n !== 0; n += delta) {
       result.unshift(n);
     }
     // We need to add the final 0, since the loop exits once we hit 0.
     result.unshift(0);
     return result;
-  };
-  var n = 30;
+  }
+  const n = 30;
   console.log('Array of numbers V4 (30):', arrayOfNumbersV4(n));
   console.log('Can we tell if it was run?', arrayOfNumbersV4HasBeenRun);
   console.log('N is still 50?', n); // n was passed to the function by value
@@ -190,7 +190,7 @@
    * If there is some logic other than mathematical iteration for the condition
    * of a loop we can also use a `while` loop.
    */
-  var done = false;
+  let done = false;
   while (!done) {
     console.log('Not done yet...');
     done = true;
@@ -205,73 +205,134 @@
   /**
    * Loop constructs are really powerful, and sometimes the above loop types are
    * the only way to go for an efficient implementation, but there are some
-   * newer array methods that make iteration a little more fun. Remember our
-   * `addNumbers` function from a previous lesson?
+   * newer array methods that make iteration a little more fun.
+   *
+   * Before we play with functional style looping, let's learn a new type of
+   * function--the "arrow function"--and see how they differ.
+   *
+   *   * Arrow functions can only be defined within expressions, unlike function
+   *     statements, and therefore are never hoisted.
+   *   * Arrow functions are not given an `arguments` object within their scope
+   *     like normal functions are, but this is usually countered by using the
+   *     `rest` operator with the last function argument definition.
+   *   * Arrow functions are not given a `this` object within their scope like
+   *     normal functions are, but `this` can often accessed from within an
+   *     arrow function through closure. We'll go over this in a later lesson.
    */
-  var addNumbers = function (a, b) {
-    return +a + +b;
+
+  // Here is an example of a function taking an arbitrary number of arguments
+  // through use of the `arguments` object in scope to the function.
+  function sumArgs() {
+    let sum = 0;
+    for (let i = 0; i < arguments.length; ++i) {
+      sum += arguments[i];
+    }
+    return sum;
+  }
+  const argsSum = sumArgs(1, 2, 3, 4);
+
+  // Here is the same example replacing `arguments` with rest arguments
+  function sumArgs2(...myArgs) {
+    let sum = 0;
+    for (let i = 0; i < myArgs.length; ++i) {
+      sum += myArgs[i];
+    }
+    return sum;
+  }
+
+  // Here is the same example as an arrow function
+  const sumArgs3 = (...myArgs) => {
+    let sum = 0;
+    for (let i = 0; i < myArgs.length; ++i) {
+      sum += myArgs[i];
+    }
+    return sum;
   };
 
-  var numberArray = [1, '2', 3, 4, '5'];
+  /**
+   * Now, let's get back to looping.
+   * Remember our `addNumbers` function from a previous lesson?
+   */
+  function addNumbers(a, b) {
+    return +a + +b;
+  }
 
-  var sum = 0;
-  // The array forEach method calls the given function once for each item in the
-  // array, passing the current array item and index of it in the array.
-  numberArray.forEach(function (current, index) {
+  /**
+   * We can redefine this as an arrow function in either of the following ways:
+   */
+  const addNumbersArrowWithBody = (a, b) => {
+    return +a + +b;
+  };
+  const addNumbersArrowWithNoBodyImpliedReturn = (a, b) => +a + +b;
+
+  const numberArray = [1, '2', 3, 4, '5'];
+
+  /**
+   * The array forEach method calls the given function once for each item in the
+   * array, passing the current array item and index of it in the array.
+   */
+  let sum = 0;
+  numberArray.forEach(function(current, index) {
     sum = addNumbers(sum, current);
   });
   console.log('forEach:', sum);
 
-  // The array reduce method takes a function and a starting value; calls the
-  // given function for each item of the array, passing in the return value of
-  // the previous call or the starting value for the first call, the current
-  // array item, and the index of the current item in the array; and then
-  // returns the value returned from the final call to the given function.
-  // So, calling it with `addNumbers` function and starting at 0, the following
-  // will sum all the numbers in the array.
+  /**
+   * With combination of succinct functions along with idiomatic looping
+   * functions, operations can be declared in a short, fluid, readable way.
+   *
+   * The array reduce method takes a function and a starting value; calls the
+   * given function for each item of the array, passing in the return value of
+   * the previous call or the starting value for the first call, the current
+   * array item, and the index of the current item in the array; and then
+   * returns the value returned from the final call to the given function.
+   * So, calling it with `addNumbers` function and starting at 0, the following
+   * will sum all the numbers in the array.
+   */
   console.log('reduce:', numberArray.reduce(addNumbers, 0));
 
-  // Want to manipulate each item in the array? ...
+  /**
+   * Want to manipulate each item in the array? ...
+   */
 
-  var plusItself = function (n) {
-    return n + n; // Does it concatenate? Does it perform addition? We'll see...
-  };
-  var doubleNumber = function (n) {
-    return addNumbers(n, n); // Coerce it!
-  };
-  var getType = function (n) {
-    // `typeof` built-in keyword returns string describing type of given value
-    return typeof n;
-  };
-  var doThemAll = function (n) {
-    return {
-      value:  n,
-      plus:   plusItself(n),
-      double: doubleNumber(n),
-      type:   getType(n)
-    };
-  };
+  // Note here, that if there is only one argument to an arrow function, the
+  // argument parentheses can be omitted.
+  const plusItself = n => n + n; // Does it concatenate? Does it perform addition? We'll see...
+  const doubleNumber = n => addNumbers(n, n); // Coerce it!
+  // `typeof` built-in keyword returns string describing type of given value
+  const getType = n => typeof n;
+  // Object literal returned from brace-less arrow function, must be surrounded
+  // by parentheses to distinguish from block braces.
+  const doThemAll = n => ({
+    value:  n,
+    plus:   plusItself(n),
+    double: doubleNumber(n),
+    type:   getType(n)
+  });
 
-  // The array map function creates a new array whose items are the result of
-  // calling the given function for each item in the original array.
+  /**
+   * The array map function creates a new array whose items are the result of
+   * calling the given function for each item in the original array.
+   */
   console.log('Plus map:',    numberArray.map(plusItself));
   console.log('Double map:',  numberArray.map(doubleNumber));
   console.log('Type map:',    numberArray.map(getType));
   console.log('Do them all:', numberArray.map(doThemAll));
 
-  // Object keys aren't in guaranteed order, but you can iterate all the keys...
+  /**
+   * Object key order cannot always be guaranteed, but you can iterate all the keys...
+   */
 
-  var optionalParam = function(param, defaultValue) {
-    return typeof param === 'undefined' || param === null ? defaultValue : param;
-  };
+  const optionalParam = (param, defaultValue) =>
+    typeof param === 'undefined' || param === null ? defaultValue : param;
 
-  var getKeyValuePairs = function(obj, propertyDelimiter, keyValueDelimiter) {
+  function getKeyValuePairs(obj, propertyDelimiter, keyValueDelimiter) {
     // Let's make delimiters optional, with default values
     propertyDelimiter = optionalParam(propertyDelimiter, ' | ');
     keyValueDelimiter = optionalParam(keyValueDelimiter, ': ');
     // The Object keys method returns an array of keys present in given object.
-    var objKeys = Object.keys(obj);
-    var pairsArray = objKeys.reduce(
+    const objKeys = Object.keys(obj);
+    const pairsArray = objKeys.reduce(
       // Remember, these parameter names are just aliases, you can name them
       // whatever you like. Only the order of them is important.
       function(keyValuePairs, objectKey, indexNotGuaranteed) {
@@ -291,9 +352,9 @@
     // On the final array we'll call array join method to join the array of
     // strings into a single array separated by the given delimiter string.
     return pairsArray.join(propertyDelimiter)
-  };
+  }
 
-  var obj = doThemAll('123');
+  const obj = doThemAll('123');
   console.log('Object iteration!', getKeyValuePairs(obj));
 
   /**
@@ -312,10 +373,14 @@
    * Hint: If your function is called with `n` as 5 it should return '*****'.
    * Also, there is a string method called `repeat`.
    */
-  // Add your code here
-  tutorial.stars(function(n) {
-    return '*'.repeat(n);
-  });
+  function myStarsSolution(n) {
+    // Add your code here
+
+  }
+
+  const workingStarsSolution = n => '*'.repeat(n);
+
+  tutorial.stars(myStarsSolution);
 
 
   /**
@@ -330,15 +395,22 @@
    * Hint: If your function is called with `n` as 10 and `width` as 3, it should
    * return '===|||===|'.
    */
-  // Add your code here
-  tutorial.stripes(function(n, width) {
-    var result = '';
-    var stripes = ['=', '|'];
-    for (var i = 0; i < n; ++i) {
-      result += stripes[Math.floor(i % (width * stripes.length) / width)];
+  function myStripesSolution(n) {
+    // Add your code here
+
+  }
+
+  function workingStripesSolution(n, width) {
+    let result = '';
+    const stripes = [ '=', '|' ];
+    for (let i = 0; i < n; ++i) {
+      result += stripes[ Math.floor(i % (width * stripes.length) / width) ];
     }
     return result;
-  });
+  }
+
+  tutorial.stripes(myStripesSolution);
+
 
   /**
    * Task 3: Diamonds
@@ -367,17 +439,19 @@
    *      \/                \ /
    *                         V
    */
-  // Add your code here
-  tutorial.diamonds(function(n) {
-    var spc = function(n) {
-      return ' '.repeat(n)
-    };
-    var odd = n % 2; // 0 or 1
-    var even = -n % 2 + 1; // 0 or 1
-    var pad = Math.floor((n - 1) / 2);
-    var result = [];
-    var line;
-    for (var i = 0; i < n; ++i) {
+  function myDiamondsSolution(n) {
+    // Add your code here
+
+  }
+
+  function workingDiamondsSolution(n) {
+    const spc = n => ' '.repeat(n);
+    const odd = n % 2; // 0 or 1
+    const even = -n % 2 + 1; // 0 or 1
+    const pad = Math.floor((n - 1) / 2);
+    let result = [];
+    let line;
+    for (let i = 0; i < n; ++i) {
       line = '';
       line += spc(Math.abs(pad - i) - (i > pad ? even : 0));
       if (i === 0) {
@@ -392,9 +466,10 @@
       result.push(line);
     }
     result = result.join('\n');
-    console.log(n);
-    console.log(result);
     return result;
-  });
+  }
+
+  tutorial.diamonds(myDiamondsSolution);
+
 
 })(window.tutorial);

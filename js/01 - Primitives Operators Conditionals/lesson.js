@@ -2,15 +2,11 @@
 
 First thing is first: sometimes you want to add explanatory text to describe
 your code; you do so using a comment. In JavaScript, you can start a comment
-with the two characters /* and end it with the same two character's reversed.
+with the two characters /* and end it with the same two characters reversed.
 The following two characters end this multi-line comment: */
-
 
 /**
  * Here we started another multi-line comment.
- * 
- * It's OK to put /* inside a comment, but we were forced to end the comment
- * when putting the * and / characters together to show how to end the comment.
  *
  * Sometimes you'll see multi-line comments like this one, where stars run down
  * the left side. It just looks nice, but it's still just whatever is between
@@ -18,7 +14,7 @@ The following two characters end this multi-line comment: */
  * The next line is missing a star:
             ...    but the comment goes on    ...
  *
- * The beginning or end of the comment need not be on it's own line either, it's
+ * The beginning or end of the comment need not be on its own line either, it's
  * just easier to see where the comment ends that way.
  */
 
@@ -39,7 +35,7 @@ The following two characters end this multi-line comment: */
    * output to the developer console in the browser (F12). This can be helpful
    * to get feedback about where you are in code or what values you have.
    *
-   * In this case, we are passing in a string surrounded by single quotes (').
+   * In this case, we are passing in a string surrounded by single quotes (`'`).
    * So, if you open index.html in your browser and open the developer
    * console (F12), you'll see the words appear 'Text I want to see...', along
    * with some other output from further down this file.
@@ -48,13 +44,13 @@ The following two characters end this multi-line comment: */
 
 
   /**
-   * After this comment we declare a variable. We use the `var` keyword to
+   * After this comment we declare a variable. We use the `let` keyword to
    * signify we are about to name a variable, and then we provide that name.
    * In this case, the name of our variable is `countOfDogs`. A variable is a
    * sort of named "box" in computer memory; we want to be able to store
    * something in the box and come back later and retrieve what's in the box.
    */
-  var countOfDogs; // We can comment on the end of a line of code too.
+  let countOfDogs; // We can comment on the end of a line of code too.
   
   /**
    * In the above case, we want to store a number in the variable that we can
@@ -68,31 +64,53 @@ The following two characters end this multi-line comment: */
    * We can prove this by logging it:
    */
   console.log('Count of Dogs (without a value):', countOfDogs);
-  
+
+  /**
+   * We can also explicitly store `undefined`, though in this case it already
+   * has this value.
+   */
+  countOfDogs = undefined;
+
   /**
    * This allows you to tell the difference between an undefined variable, and
    * one that is just "empty". We named the variable `countOfDogs`, and our
    * intent is to store numbers in it, but unless we explicitly put a number in
    * it, JavaScript has no way of knowing that in this case, our "empty" might
-   * be a zero (0), so it uses undefined for this purpose.
-   * We can assign a value to our count now using the equals operator:
+   * be a zero (`0`), so it uses `undefined` for this purpose.
+   * We can assign a value to our count now using the assignment operator (`=`):
    */
   countOfDogs = 12; // That's a lot of dogs to have.
   
   /**
    * We can declare (make a "box" for) and define (assign an initial value to)
-   * a variable in one line with both `var` and `=` together.
+   * a variable in one line with both `let` and `=` together.
    */
-  var countOfCats = 23; // SRSLY? NO MOR CATS!
+  let countOfCats = 23; // SRSLY? NO MOR CATS!
 
   /**
    * We can also declare more than one variable per statement.
    */
-  var countOfBirds = 1, countOfIguanas = 2,
+  let countOfBirds = 1, countOfIguanas = 2,
     countOfPigs = 3;
 
   /**
-   * You may have noticed by now that most lines of code end in a semi-colon (;)
+   * There is also the `const` keyword, which works the same as `let`, except
+   * that you'll get an error if you later attempt to reassign to the variable.
+   * Often, constants are given identifiers with all capital letters and
+   * underscores between words, but this is just a personal preference.
+   */
+  const PI = 3;
+
+  /**
+   * There is also the legacy `var` keyword, which works nearly the same as
+   * `let`, with some caveats that make it worth avoiding. We'll discuss those
+   * differences in the next lesson, but for now avoid using `var` in favor or
+   * `let` and `const`.
+   */
+  var dontUseVarKeyword;
+
+  /**
+   * You may have noticed by now that most lines of code end in a semi-colon (`;`)
    * character. This tells JavaScript where the end of a statement is, since
    * usually JavaScript ignores all whitespace, including new-lines.
    *
@@ -118,15 +136,12 @@ The following two characters end this multi-line comment: */
   
   /**
    * Variable identifiers may contain letters, digits, underscores, and dollar
-   * signs, but may not begin with a digit. They are also case sensitive, so
+   * signs, but may not begin with a digit. They are also case-sensitive, so
    * `DOG` is a different identifier than `Dog`. Identifiers must also not be
    * among the JavaScript reserved words list.
    *
    * Reserved words can't be used as variable names. This way JavaScript doesn't
-   * confuse variable names for these words of special use. If you could name a
-   * variable `var`, then whenever you used the word `var`, JavaScript wouldn't
-   * have any way of knowing if you wanted to declare a new variable or if you
-   * were just using your variable named `var`.
+   * confuse variable names for these words of special use.
    *
    * These are all invalid variable identifiers:
    *
@@ -155,16 +170,16 @@ The following two characters end this multi-line comment: */
    * meant to show the user the word "delete" in a sentence. We can create a
    * string using single (') or double (") quotes, or back-ticks (`).
    */
-  var myFirstDogName    = 'Phil';
-  var myFirstCatName    = "Paul";
-  var myFirstIguanaName = `Punxsutawney`;
+  let myFirstDogName    = 'Phil';
+  let myFirstCatName    = "Paul";
+  let myFirstIguanaName = `Punxsutawney`;
   
   /**
    * Single and double quotes must end on a single line or there will be an
    * error. You can break up a long string by adding (called "concatenating")
    * multiple strings to each other, like so:
    */
-  var myComplicatedFirstPetName = 'Well, we called him "kitty", '
+  let myComplicatedFirstPetName = 'Well, we called him "kitty", '
     + "but I can't be bothered to give more details at this point.";
    
   /**
@@ -176,7 +191,7 @@ The following two characters end this multi-line comment: */
    * Back-ticks can be used across multiple lines, but any whitespace is
    * included within the string.
    */
-  var myComplicatedSecondPetName = `Well, we called him super-crazy-glue,
+  let myComplicatedSecondPetName = `Well, we called him super-crazy-glue,
     but... actually, it wasn't that complicated.`;
 
   /**
@@ -258,8 +273,9 @@ The following two characters end this multi-line comment: */
   /**
    * You might be further surprised to learn that if we quote both operands we
    * actually do get alphabetical ordering. Which operand gets coerced based on
-   * which operator is used, is well defined in rules that we won't go into
-   * here. Prefer using the right type for the job.
+   * which operator is used, is well-defined in the specification, but there are
+   * so many variations that using non-strict-equality operator can often lead
+   * to hard to find issues. Better to just use the right type for the job.
    */
   console.log(
     "Is '123' > '45' ?",
@@ -267,13 +283,30 @@ The following two characters end this multi-line comment: */
   );
 
   /**
-   * When we need to make sure things are really equal, firstly in their types,
-   * with no coercion, we use the "strict equality" operator (===), or
+   * When we need to make sure things are really equal, by type and value,
+   * without coercion, we use the "strict equality" operator (===), or
    * "triple-equals".
    */
   console.log(
     "Is '123' === 123 ?",
     '123' === 123 // false
+  );
+
+  /**
+   * Type constructors like `String` or `Number` can be used to manually cast
+   * a particular type, such that a strict comparison may be performed without
+   * the need to resort to the hazardous non-strict-equality operator.
+   */
+  console.log(
+    "Is '123' === String(123) ?",
+    // Use String constructor to convert number value to string
+    '123' === String(123), // true
+    // Concatenate empty string with number to make it a string
+    '123' === '' + 123, // true
+    // Use Number constructor to convert string value to number
+    Number('123') === 123, // true
+    // Use the unary `+` operator to convert string to number
+    +'123' === 123, // true
   );
 
   /**
@@ -289,7 +322,20 @@ The following two characters end this multi-line comment: */
    * implies an unset value, `null` explicitly denotes a valid "empty" value
    * that we would be watching out for.
    */
-  var mySoonToBeSuperCoolThing = null;
+  let mySoonToBeSuperCoolThing = null;
+
+  /**
+   * The `typeof` unary operator returns a string representation of the type of
+   * the value to the right of the operator.
+   */
+  console.log(
+    'Types:',
+    typeof 123, // 'number'
+    typeof '123', // 'string'
+    typeof true, // 'boolean'
+    typeof undefined, // 'undefined'
+    typeof null, // 'object' (more on this in the next lesson)
+  );
 
   /**
    * There are a number of other operators:
@@ -299,11 +345,22 @@ The following two characters end this multi-line comment: */
    *   a <= b     - Returns true if a less-than-or-equal-to b, else false
    *   a / b      - Divides a by b (possibly with decimal places)
    *   a % b      - Divides a by b, returning the remainder
-   *   a += b     - Adds a and b, putting the sum into the a "box" (numbers)
+   *   a += b     - Adds a and b, putting the sum into the a "box" (for numbers)
    *   a += b     - Concatenates a and b, putting the combined string into
-   *                the a "box" (strings)
-   *   a && b     - Returns true if both a and b are true, else false
-   *   a || b     - Returns true if either a or b are true, else false
+   *                the a "box" (for strings)
+   *
+   * Logical operators in JavaScript use a boolean conversion of given operands
+   * to determine control flow, but return the original values (the last operand
+   * tested). This is contrary to some other programming languages that strictly
+   * return boolean values from the boolean operators, so take note of the
+   * return value. These implied coerced `true` or `false` values are referred
+   * to as "truthiness", or `truthy` for values that would coerce to a `true`
+   * value, and `falsey` for values that would coerce to a `false` value.
+   *
+   * Here are a few logical operators, for example:
+   *
+   *   a && b     - Returns b if both a and b are `truthy`, else a
+   *   a || b     - Returns a if a is `truthy`, else b
    *
    * There are operators that work on a single operand:
    *
@@ -316,12 +373,12 @@ The following two characters end this multi-line comment: */
    *   a ? b : c  - Returns b if a evaluates to true, otherwise returns c
    *
    * The && and || logical operators are really useful to combine logic.
-   * The "ternary operator" (?:) is particularly useful, because it allows
+   * The "ternary operator" (`?`/`:`) is particularly useful, because it allows
    * us to now be able to make choices.
    */
-  var allDucksAreBirds = true;
-  var allBirdsFly = true;
-  var allDucksFly = allDucksAreBirds && allBirdsFly;
+  let allDucksAreBirds = true;
+  let allBirdsFly = true;
+  let allDucksFly = allDucksAreBirds && allBirdsFly;
   console.log(
     'If all ducks are birds and all birds fly, do all ducks fly?',
     allDucksFly, // true
@@ -329,12 +386,22 @@ The following two characters end this multi-line comment: */
   );
 
   /**
+   * Sometimes the value we want is already in a variable, and we only need an
+   * alternative if the variable is unset. In this case, we can use the
+   * null-coalesce operator, which returns the right value only if the left
+   * value is `null` or `undefined`. Note, boolean-or (`||`) operator is also
+   * sometimes used for this purpose, as it can catch other `falsey` values.
+   */
+  let name;
+  console.log('I forgot to ask your name,', name ?? 'friend');
+
+  /**
    * That ternary operator is useful to branch to one value or another depending
    * on a boolean input, but if you want to branch to one block of code or
    * another you'll need to use an `if/else` block:
    */
 
-  var traditionalExclamation;
+  let traditionalExclamation;
 
   // The code between the curly-braces { } only runs if the value between the
   // `if` parentheses can be coerced to a boolean value of true.
@@ -343,7 +410,6 @@ The following two characters end this multi-line comment: */
   }
 
   // All of these values coerce to boolean value of false; they are "falsey".
-  // Any other value for each of the below value's types is considered "truthy".
   if ("" || 0 || null || undefined) {
     // ... so this code should never run
     console.log('FREAK OUT!! (1)');
@@ -380,7 +446,7 @@ The following two characters end this multi-line comment: */
    * way to go, but if you are comparing a single value against various
    * possibilities a switch/case block might be nicer:
    */
-  var keyCode = 13; // Imagine we got this from a key-press event
+  let keyCode = 13; // Imagine we got this from a key-press event
   // The value of keyCode will be compared with each case until one matches.
   switch (keyCode) {
     // If keyCode is equal to 37 the code under this case is run.
